@@ -64,6 +64,7 @@
     ../../programs/chromium.nix
     #../../programs/clang.nix
     ../../programs/gcc.nix
+    ../../programs/hyprland.nix
     ../../programs/kitty.nix
     ../../programs/mpv.nix
   ];

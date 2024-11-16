@@ -94,15 +94,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = false;
-
-  # Install hyprland
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
   # Install neovim
   programs.neovim = {
     enable = true;
