@@ -45,7 +45,9 @@
     #};
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, ... } @ inputs: let
+    inherit (self) outputs;
+  in 
   {
     nixosConfigurations = {
       tmmy-yoga = let
@@ -96,5 +98,17 @@
     #    ];
     #  };
     #};
+
+    homeConfigurations = {
+      "thomasstahl@imar123" = let
+        system = "x86_64-linux";
+      in home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [
+          ./home/users/thomasstahl/thomasstahl-imar123.nix
+        ];
+      };
+    };
   };
 }
