@@ -48,33 +48,53 @@
   outputs = { self, nixpkgs, home-manager, darwin, ... } @ inputs:
   {
     nixosConfigurations = {
-      tmmy-yoga = nixpkgs.lib.nixosSystem {
+      tmmy-yoga = let
         system = "x86_64-linux";
-	modules = [
-	  ./nixos/tmmy-yoga/configuration.nix
-	  home-manager.nixosModules.home-manager {
-	    home-manager.users.tmmy = import ./home/users/tmmy/tmmy-yoga.nix;
-	    home-manager.backupFileExtension = "backup";
-	    home-manager.useGlobalPkgs = true;
-	    home-manager.useUserPackages = true;
-	  }
-	];
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePrediate = _: true;
+          };
+        };
+      in nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = inputs // { pkgs = pkgs; };
+        modules = [
+          ./nixos/tmmy-yoga/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.users.tmmy = import ./home/users/tmmy/tmmy-yoga.nix;
+            home-manager.backupFileExtension = "backup";
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
+        ];
       };
     };
 
     #darwinConfigurations = {
-      #tmmy@tmmy-mbp = darwin.lib.darwinSystem {
-      #  system = "aarch64-darwin";
-      #  modules = [
-      #    ./nixos/tmmy-mbp/configuration.nix
-      #    home-manager.darwinModules.home-manager {
-      #       home-manager.users.tmmy = import ./home/users/tmmy/tmmy-mbp.nix;
-      #       home-manager.backupFileExtension = "backup";
-      #       home-manager.useGlobalPkgs = true;
-      #       home-manager.useUserPackages = true;
-      #    }
-      #  ];
-      #};
+    #  tmmy-mbp = let
+    #    system = "aarch64-darwin";
+    #    pkgs = import nixpkgs {
+    #      inherit system;
+    #      config = {
+    #        allowUnfree = true;
+    #        allowUnfreePrediate = _: true;
+    #      };
+    #    };
+    #  in darwin.lib.darwinSystem {
+    #    inherit system;
+    #    specialArgs = inputs // { pkgs = pkgs; };
+    #    modules = [
+    #      ./nixos/tmmy-mbp/configuration.nix
+    #      home-manager.darwinModules.home-manager {
+    #         home-manager.users.tmmy = import ./home/users/tmmy/tmmy-mbp.nix;
+    #         home-manager.backupFileExtension = "backup";
+    #         home-manager.useGlobalPkgs = true;
+    #         home-manager.useUserPackages = true;
+    #      }
+    #    ];
+    #  };
     #};
   };
 }
