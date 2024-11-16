@@ -1,23 +1,13 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "tmmy";
-  home.homeDirectory = "/home/tmmy";
-
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  imports = [
+    ./common.nix
+  ];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -35,14 +25,17 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-    pkgs.chromium
-    pkgs.bitwarden
-    pkgs.brave
-    pkgs.btop
-    pkgs.kitty
-    pkgs.kitty-themes
-    pkgs.nerdfonts
-    pkgs.zsh-history-substring-search
+    chromium
+    bitwarden
+    brave
+    btop
+    gcc13
+    #clang_18
+    clang-tools
+    kitty
+    kitty-themes
+    nerdfonts
+    zsh-history-substring-search
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -77,7 +70,6 @@
   #  /etc/profiles/per-user/thommy/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "nvim";
     TERM = "kitty";
   };
 

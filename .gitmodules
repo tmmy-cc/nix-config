@@ -1,0 +1,3 @@
+[submodule "home/programs/neovim/nvim"]
+	path = home/programs/neovim/nvim
+	url = git@github.com:tmmy-cc/lazyvim-config.git
