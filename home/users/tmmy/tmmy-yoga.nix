@@ -1,9 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [
-    ./common.nix
-  ];
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -24,18 +23,6 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-
-    chromium
-    bitwarden
-    brave
-    btop
-    gcc13
-    #clang_18
-    clang-tools
-    kitty
-    kitty-themes
-    nerdfonts
-    zsh-history-substring-search
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -69,85 +56,15 @@
   #
   #  /etc/profiles/per-user/thommy/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    TERM = "kitty";
-  };
 
-  # Enable font config
-  fonts.fontconfig.enable = true;
-
-  # Enable tmux
-  programs.tmux = {
-    enable = true;
-    mouse = true;
-  };
-
-  # Enable zsh
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    initExtra = ''
-      source ${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-      bindkey '^[OA' history-substring-search-up
-      bindkey '^[[A' history-substring-search-up
-      bindkey '^[OB' history-substring-search-down
-      bindkey '^[[B' history-substring-search-down
-    '';
-  };
-
-  # Enable starship.rs
-  programs.starship = {
-    enable = true;
-    # Configuration written to ~/.config/starship.toml
-    settings = {
-      aws.disabled = true;
-
-      # add_newline = false;
-
-      # character = {
-      #   success_symbol = "[➜](bold green)";
-      #   error_symbol = "[➜](bold red)";
-      # };
-
-      # package.disabled = true;
-    };
-  };
-
-  # Enable git
-  programs.git = {
-    enable = true;
-    userName = "Thomas Stahl";
-    userEmail = "me@tmmy.cc";
-  };
-
-  # Enable kitty
-  programs.kitty = {
-    enable = true;
-    font = {
-      name = "JetBrainsMono Nerd Font";
-      size = 10;
-    };
-    theme = "Tokyo Night";
-    settings = {
-      copy_on_select = true;
-
-      mouse_hide_wait = "2.0";
-      window_padding_width = 5;
-
-      dynamic_background_opacity = true;
-      background_opacity = "0.95";
-      background_blur = 5;
-      background = "#000000";
-    };
-  };
-
-  # Enable MPV
-  programs.mpv = {
-    enable = true;
-  };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  imports = [
+    ./common.nix
+    ../../programs/bitwarden.nix
+    ../../programs/brave.nix
+    ../../programs/chromium.nix
+    #../../programs/clang.nix
+    ../../programs/gcc.nix
+    ../../programs/kitty.nix
+    ../../programs/mpv.nix
+  ];
 }

@@ -22,7 +22,18 @@
     EDITOR = "nvim";
   };
 
+  # Enable git
+  programs.git = {
+    enable = true;
+    userName = "Thomas Stahl";
+    userEmail = "me@tmmy.cc";
+  };
+
   imports = [
+    ../../programs/btop.nix
     ../../programs/neovim
+    ../../programs/starship.nix
+    ../../programs/tmux.nix
+    ../../programs/zsh.nix
   ];
 }

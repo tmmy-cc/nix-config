@@ -37,6 +37,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    clang-tools
     ripgrep
     fd
     lua-language-server
