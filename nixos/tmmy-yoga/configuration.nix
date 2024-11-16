@@ -94,9 +94,8 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # Install neovim
-  programs.neovim = {
-    enable = true;
+  # Make vim the default editor
+  programs.vim = {
     defaultEditor = true;
   };
 
@@ -110,11 +109,26 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # monitoring tools
     btop
+    iotop
+    iftop
+    strace
+    ltrace
+    lsof
+    # system tools
+    sysstat
+    lm_sensors
+    ethtool
+    pciutils
     usbutils
-    neovim
+    # editor
+    vim
+    # python
     python3
+    # utils
     wget
+    curl
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

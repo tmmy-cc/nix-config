@@ -29,6 +29,34 @@
     userEmail = "me@tmmy.cc";
   };
 
+  home.packages = with pkgs; [
+    neofetch
+
+    zip
+    xz
+    unzip
+    p7zip
+
+    mtr
+    iperf3
+    dnsutils
+    ldns
+    socat
+    nmap
+    ipcalc
+
+    file
+    which
+    tree
+    gawk
+    gnutar
+    gnused
+    gnupg
+
+    hugo
+    glow
+  ];
+
   imports = [
     ../../programs/btop.nix
     ../../programs/neovim
