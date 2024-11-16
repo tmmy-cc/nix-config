@@ -111,6 +111,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     btop
+    usbutils
     neovim
     python3
     wget
