@@ -37,10 +37,17 @@ let
 in
 {
   home.packages = with pkgs; [
-    clang-tools
     ripgrep
     fd
     lua-language-server
+    vscode-langservers-extracted
+    nil
+    clang-tools
+    marksman
+    python311Packages.python-lsp-server
+    dockerfile-language-server-nodejs
+    docker-compose-language-service
+    yaml-language-server
     rust-analyzer-unwrapped
     black
     nodejs_22
@@ -48,11 +55,10 @@ in
 
   programs.neovim = {
     enable = true;
-    #package = pkgs.neovim;
+    viAlias = true;
     vimAlias = true;
     coc.enable = false;
-    #withNodeJs = true;
-
+    withNodeJs = true;
     plugins = [
       treesitterWithGrammars
     ];
