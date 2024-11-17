@@ -23,6 +23,7 @@
     };
     theme = "Tokyo Night";
     settings = {
+      hide_window_decorations = true;
       copy_on_select = true;
 
       mouse_hide_wait = "2.0";
