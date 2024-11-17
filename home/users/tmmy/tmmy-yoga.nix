@@ -69,6 +69,7 @@
     ../../programs/hyprland.nix
     ../../programs/kitty.nix
     ../../programs/mpv.nix
+    ../../programs/polymc.nix
   ];
 
   # Enable compose key
