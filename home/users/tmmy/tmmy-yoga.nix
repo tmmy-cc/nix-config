@@ -59,6 +59,8 @@
 
   imports = [
     ./common.nix
+    ../../desktop/gnome/gnome-tweaks.nix
+    ../../desktop/gnome/forge.nix
     ../../programs/bitwarden.nix
     ../../programs/brave.nix
     ../../programs/chromium.nix
@@ -68,4 +70,58 @@
     ../../programs/kitty.nix
     ../../programs/mpv.nix
   ];
+
+  # Enable compose key
+  home.keyboard.options = "compose:caps";
+
+  # Configure gnome
+  dconf.settings = {
+    "org/gnome/desktop/background" = {
+      picture-options = "zoom";
+      color-shading-type = "solid";
+      picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-d.svg";
+      primary-color = "#241f31";
+      secondary-color = "#000000";
+      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
+    };
+    "org/gnome/desktop/screensaver" = {
+      color-shading-type = "solid";
+      picture-options = "zoom";
+      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
+      primary-color = "#241f31";
+      secondary-color = "#000000";
+    };
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+    "org/gnome/shell" = {
+      disable-user-extensions = false;
+      disabled-extensions=[
+        "windowsNavigator@gnome-shell-extensions.gcampax.github.com"
+        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
+        "light-style@gnome-shell-extensions.gcampax.github.com"
+      ];
+      enabled-extensions = [
+        "forge@jmmaranan.com"
+      ];
+      favorite-apps = [
+        "org.gnome.Nautilus.desktop"
+        "brave-browser.desktop"
+        "bitwarden.desktop"
+        "org.gnome.Settings.desktop"
+        "kitty.desktop"
+      ];
+      welcome-dialog-last-shown-version = "46.2";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+      ];
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Super>t";
+      command = "kitty";
+      name = "kitty";
+    };
+  };
 }
