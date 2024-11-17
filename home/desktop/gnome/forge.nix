@@ -6,14 +6,6 @@
   ];
 
   dconf.settings = {
-    # Remove colliging keybindings
-    "org/gnome/desktop/wm/keybindings" = {
-      minimize = ["<Shift><Super>h"];
-    };
-    "org/gnome/settings-daemon/plugins/media-keys" = {
-      screensaver = ["<Shift><Super>l"];
-    };
-    # Configure extension
     "org/gnome/shell/extensions/forge" = {
       css-last-update = 37;
       tiling-mode-enabled = true;
@@ -28,7 +20,7 @@
       con-tabbed-layout-toggle = ["<Shift><Super>t"];
       con-tabbed-showtab-decoration-toggle = ["<Control><Alt>y"];
       focus-border-toggle = ["<Super>x"];
-      prefs-tiling-toggle = ["<Super>w"];
+      prefs-tiling-toggle = ["<Control><Super>w"];
       window-focus-down = ["<Super>j"];
       window-focus-left = ["<Super>h"];
       window-focus-right = ["<Super>l"];

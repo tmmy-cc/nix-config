@@ -113,7 +113,13 @@
       ];
       welcome-dialog-last-shown-version = "46.2";
     };
+    # Keybindings
+    "org/gnome/desktop/wm/keybindings" = {
+      close = ["<Super>w"];
+      minimize = ["<Shift><Super>h"];
+    };
     "org/gnome/settings-daemon/plugins/media-keys" = {
+      screensaver = ["<Shift><Super>l"];
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
       ];
