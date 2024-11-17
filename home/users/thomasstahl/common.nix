@@ -55,6 +55,8 @@
 
     hugo
     glow
+    ripgrep
+    fzf
   ];
 
   imports = [
