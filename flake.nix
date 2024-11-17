@@ -48,6 +48,12 @@
       url = "github:PolyMC/PolyMC";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # rust packages
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, darwin, ... } @ inputs: let
@@ -65,6 +71,7 @@
           };
           overlays = [
             inputs.polymc.overlay
+            inputs.fenix.overlays.default
           ];
         };
       in nixpkgs.lib.nixosSystem {

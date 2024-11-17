@@ -59,6 +59,7 @@
 
   imports = [
     ./common.nix
+    ../../development/rust.nix
     ../../desktop/gnome/gnome-tweaks.nix
     ../../desktop/gnome/forge.nix
     ../../programs/bitwarden.nix
