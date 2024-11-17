@@ -60,13 +60,12 @@
   imports = [
     ./common.nix
     ../../development/rust.nix
+    ../../development/c-cpp.nix
     ../../desktop/gnome/gnome-tweaks.nix
     ../../desktop/gnome/forge.nix
     ../../programs/bitwarden.nix
     ../../programs/brave.nix
     ../../programs/chromium.nix
-    #../../programs/clang.nix
-    ../../programs/gcc.nix
     ../../programs/hyprland.nix
     ../../programs/kitty.nix
     ../../programs/mpv.nix
