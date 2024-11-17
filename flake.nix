@@ -43,6 +43,11 @@
     #  url = "github:nix-community/nixvim";
     #  inputs.nixpkgs.follows = "nixpkgs";
     #};
+
+    polymc = {
+      url = "github:PolyMC/PolyMC";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, darwin, ... } @ inputs: let
@@ -58,6 +63,9 @@
             allowUnfree = true;
             allowUnfreePrediate = _: true;
           };
+          overlays = [
+            inputs.polymc.overlay
+          ];
         };
       in nixpkgs.lib.nixosSystem {
         inherit system;
