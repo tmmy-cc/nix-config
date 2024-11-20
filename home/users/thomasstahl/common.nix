@@ -18,8 +18,19 @@
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
+  home.shellAliases = {
+    wg-cmd = "ssh thomasstahl@12001.wg.my.imar.de";
+    wg-ssh = "ssh -A -J thomasstahl@12001.wg.my.imar.de";
+    wg-scp = "scp -oProxyCommand='ssh -W %h:%p thomasstahl@12001.wg.my.imar.de'";
+  };
+
+  home.sessionPath = [
+    "$HOME/go/bin"
+  ];
+
   home.sessionVariables = {
     EDITOR = "nvim";
+    COMMITLINT_CONFIG = "$HOME/.commitlint.yaml";
   };
 
   # Enable git
