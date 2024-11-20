@@ -59,15 +59,15 @@
 
   imports = [
     ./common.nix
-    ../../development/rust.nix
+    #../../development/rust.nix
     ../../development/c-cpp.nix
     ../../desktop/gnome/gnome-tweaks.nix
-    ../../desktop/gnome/forge.nix
+    #../../desktop/gnome/forge.nix
     ../../programs/bitwarden.nix
     ../../programs/brave.nix
     ../../programs/chromium.nix
     ../../programs/hyprland.nix
-    ../../programs/kitty.nix
+    #../../programs/kitty.nix
     ../../programs/mpv.nix
   ];
 
@@ -76,21 +76,21 @@
 
   # Configure gnome
   dconf.settings = {
-    "org/gnome/desktop/background" = {
-      picture-options = "zoom";
-      color-shading-type = "solid";
-      picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-d.svg";
-      primary-color = "#241f31";
-      secondary-color = "#000000";
-      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
-    };
-    "org/gnome/desktop/screensaver" = {
-      color-shading-type = "solid";
-      picture-options = "zoom";
-      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
-      primary-color = "#241f31";
-      secondary-color = "#000000";
-    };
+    #"org/gnome/desktop/background" = {
+    #  picture-options = "zoom";
+    #  color-shading-type = "solid";
+    #  picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-d.svg";
+    #  primary-color = "#241f31";
+    #  secondary-color = "#000000";
+    #  picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
+    #};
+    #"org/gnome/desktop/screensaver" = {
+    #  color-shading-type = "solid";
+    #  picture-options = "zoom";
+    #  picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
+    #  primary-color = "#241f31";
+    #  secondary-color = "#000000";
+    #};
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
@@ -109,9 +109,9 @@
         "brave-browser.desktop"
         "bitwarden.desktop"
         "org.gnome.Settings.desktop"
-        "kitty.desktop"
+        #"kitty.desktop"
       ];
-      welcome-dialog-last-shown-version = "46.2";
+      #welcome-dialog-last-shown-version = "46.2";
     };
     # Keybindings
     "org/gnome/desktop/wm/keybindings" = {
