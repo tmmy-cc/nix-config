@@ -61,6 +61,7 @@
 
   imports = [
     ../../programs/btop.nix
+    ../../programs/eza.nix
     ../../programs/neovim
     ../../programs/starship.nix
     ../../programs/tmux.nix
