@@ -23,7 +23,8 @@
     };
     theme = "Tokyo Night";
     settings = {
-      hide_window_decorations = true;
+      hide_window_decorations = false;
+      linux_display_server = "x11";
       copy_on_select = true;
 
       mouse_hide_wait = "2.0";
