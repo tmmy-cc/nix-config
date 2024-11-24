@@ -66,7 +66,7 @@ in
   };
 
   home.file."./.config/nvim/" = {
-    source = ./nvim;
+    source = ../../dotconfig/nvim;
     recursive = true;
   };
 
