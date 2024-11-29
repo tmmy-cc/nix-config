@@ -1,8 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  # Home Manager needs a bit of information about you and the paths it should
+  # manage.
+  home.username = "tmmy";
+  home.homeDirectory = "/home/tmmy";
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
