@@ -72,6 +72,7 @@
     ../../programs/kitty.nix
     ../../programs/mpv.nix
     ../../programs/polymc.nix
+    ../../programs/obsidian.nix
   ];
 
   # Enable compose key
