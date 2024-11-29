@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     kitty
     kitty-themes
-    nerdfonts
+    (nerdfonts.override { fonts = ["JetBrainsMono"]; })
   ];
 
   home.sessionVariables = {
@@ -12,13 +12,13 @@
   };
 
   # Enable font config
-  fonts.fontconfig.enable = lib.mkOptionDefault true;
+  fonts.fontconfig.enable = lib.mkDefault true;
 
   # Enable kitty
   programs.kitty = {
     enable = true;
     font = {
-      name = "JetBrainsMono Nerd Font";
+      name = "JetBrainsMono Nerd Font Mono";
       size = 10;
     };
     theme = "Tokyo Night";
