@@ -21,7 +21,7 @@
       name = "JetBrainsMono Nerd Font Mono";
       size = 10;
     };
-    theme = "Tokyo Night";
+    themeFile = "tokyo_night_night";
     settings = {
       hide_window_decorations = false;
       linux_display_server = "x11";

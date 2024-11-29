@@ -2,10 +2,12 @@
   description = "tmmy's NixOS/home-manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
+      #url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -14,8 +16,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    darwin = {
-      url = "github:lnl7/nix-darwin/master";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -56,7 +58,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, ... } @ inputs: let
+  outputs = { self, nixpkgs, nix-darwin, home-manager, ... } @ inputs: let
     inherit (self) outputs;
   in 
   {
