@@ -91,30 +91,33 @@
       };
     };
 
-    #darwinConfigurations = {
-    #  tmmy-mbp = let
-    #    system = "aarch64-darwin";
-    #    pkgs = import nixpkgs {
-    #      inherit system;
-    #      config = {
-    #        allowUnfree = true;
-    #        allowUnfreePrediate = _: true;
-    #      };
-    #    };
-    #  in darwin.lib.darwinSystem {
-    #    inherit system;
-    #    specialArgs = inputs // { pkgs = pkgs; };
-    #    modules = [
-    #      ./nixos/tmmy-mbp/configuration.nix
-    #      home-manager.darwinModules.home-manager {
-    #         home-manager.users.tmmy = import ./home/users/tmmy/tmmy-mbp.nix;
-    #         home-manager.backupFileExtension = "backup";
-    #         home-manager.useGlobalPkgs = true;
-    #         home-manager.useUserPackages = true;
-    #      }
-    #    ];
-    #  };
-    #};
+    darwinConfigurations = {
+      tmmy-mbp = let
+        system = "aarch64-darwin";
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePrediate = _: true;
+          };
+          overlays = [
+            inputs.fenix.overlays.default
+          ];
+        };
+      in nix-darwin.lib.darwinSystem {
+        inherit system;
+        specialArgs = inputs // { pkgs = pkgs; };
+        modules = [
+          ./darwin/tmmy-mbp/configuration.nix
+          home-manager.darwinModules.home-manager {
+             home-manager.users.tmmy = import ./home/users/tmmy/tmmy-mbp.nix;
+             home-manager.backupFileExtension = "backup";
+             home-manager.useGlobalPkgs = true;
+             home-manager.useUserPackages = true;
+          }
+        ];
+      };
+    };
 
     homeConfigurations = {
       "thomasstahl@imar123" = let
