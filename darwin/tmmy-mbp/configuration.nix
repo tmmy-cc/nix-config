@@ -1,4 +1,4 @@
-{ self, config, pkgs, ... }:
+{ self, config, pkgs, nix-homebrew, ... }:
 
 {
   # Enable nix-command and flakes.
@@ -76,6 +76,10 @@
         ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
       done
     '';
+
+  system.activationScripts.extraActivation.text = ''
+    softwareupdate --install-rosetta --agree-to-license
+  '';
 
   system.defaults = {
     dock.autohide  = true;
