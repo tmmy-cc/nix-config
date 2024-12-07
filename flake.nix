@@ -56,9 +56,23 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, ... } @ inputs: let
+  outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, ... } @ inputs: let
     inherit (self) outputs;
   in 
   {
@@ -108,6 +122,26 @@
         inherit system;
         specialArgs = inputs // { pkgs = pkgs; };
         modules = [
+          nix-homebrew.darwinModules.nix-homebrew {
+            nix-homebrew = {
+              # Install Homebrew under the default prefix
+              enable = true;
+              # Apple Silicon only
+              #enableRosetta = true;
+              # User owning the Homebrew prefix
+              user = "tmmy";
+              # Declaartive tap mamagement
+              taps = {
+                "homebrew/homebrew-core" = inputs.homebrew-core;
+                "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+              };
+              # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`
+              mutableTaps = false;
+              # Automatically migrate existing Homebrew installations
+              #autoMigrate = true;
+            };
+          }
           ./darwin/tmmy-mbp/configuration.nix
           home-manager.darwinModules.home-manager {
              home-manager.users.tmmy = import ./home/users/tmmy/tmmy-mbp.nix;
@@ -117,6 +151,8 @@
           }
         ];
       };
+      # Expose the package set, including overlays, for convenience.
+      #darwinPackages = self.darwinConfigurations."tmmy-mbp".pkgs;
     };
 
     homeConfigurations = {
