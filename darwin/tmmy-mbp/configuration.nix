@@ -50,6 +50,8 @@
      "mac-mouse-fix"
      "iina"
      "the-unarchiver"
+     "battery"
+     "coconutbattery"
     ];
     masApps = {
      #"Yoink" = 457622435;
