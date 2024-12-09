@@ -69,7 +69,7 @@
     ../../programs/brave.nix
     ../../programs/chromium.nix
     ../../programs/hyprland.nix
-    ../../programs/kitty.nix
+    ../../programs/alacritty.nix
     ../../programs/mpv.nix
     ../../programs/polymc.nix
     ../../programs/obsidian.nix
@@ -130,8 +130,8 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding = "<Super>t";
-      command = "kitty";
-      name = "kitty";
+      command = "alacritty";
+      name = "alacritty";
     };
   };
 }
