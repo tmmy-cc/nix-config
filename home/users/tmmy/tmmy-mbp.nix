@@ -63,7 +63,7 @@
     ./common.nix
     ../../development/rust.nix
     ../../development/c-cpp.nix
-    ../../programs/kitty.nix
+    ../../programs/alacritty.nix
     ../../programs/obsidian.nix
   ];
 }
