@@ -52,6 +52,7 @@
      "the-unarchiver"
      "battery"
      "coconutbattery"
+     "aerospace"
     ];
     masApps = {
      #"Yoink" = 457622435;

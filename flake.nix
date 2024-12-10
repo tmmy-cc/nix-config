@@ -70,6 +70,10 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
+    homebrew-aerospace = {
+      url = "github:nikitabobko/homebrew-tap";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, ... } @ inputs: let
@@ -135,6 +139,7 @@
                 "homebrew/homebrew-core" = inputs.homebrew-core;
                 "homebrew/homebrew-cask" = inputs.homebrew-cask;
                 "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                "homebrew/homebrew-aerospace" = inputs.homebrew-aerospace;
               };
               # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`
               mutableTaps = false;
