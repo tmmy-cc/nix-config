@@ -65,5 +65,6 @@
     ../../development/c-cpp.nix
     ../../programs/alacritty.nix
     ../../programs/obsidian.nix
+    ../../programs/podman.nix
   ];
 }
