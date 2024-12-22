@@ -126,27 +126,29 @@
         inherit system;
         specialArgs = inputs // { pkgs = pkgs; };
         modules = [
-          nix-homebrew.darwinModules.nix-homebrew {
+          nix-homebrew.darwinModules.nix-homebrew
+          ({ config, ... }: {
+            homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
             nix-homebrew = {
               # Install Homebrew under the default prefix
               enable = true;
               # Apple Silicon only
-              #enableRosetta = true;
+              enableRosetta = true;
               # User owning the Homebrew prefix
               user = "tmmy";
-              # Declaartive tap mamagement
+              # Declarative tap mamagement
               taps = {
                 "homebrew/homebrew-core" = inputs.homebrew-core;
                 "homebrew/homebrew-cask" = inputs.homebrew-cask;
                 "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-                "homebrew/homebrew-aerospace" = inputs.homebrew-aerospace;
+                #"homebrew/homebrew-aerospace" = inputs.homebrew-aerospace;
               };
               # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`
               mutableTaps = false;
               # Automatically migrate existing Homebrew installations
               #autoMigrate = true;
             };
-          }
+          })
           ./darwin/tmmy-mbp/configuration.nix
           home-manager.darwinModules.home-manager {
              home-manager.users.tmmy = import ./home/users/tmmy/tmmy-mbp.nix;
