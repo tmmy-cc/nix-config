@@ -58,6 +58,7 @@
     };
 
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
       flake = false;
@@ -76,7 +77,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, ... } @ inputs: let
+  outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, disko, ... } @ inputs: let
     inherit (self) outputs;
   in 
   {
@@ -101,6 +102,32 @@
           ./nixos/tmmy-yoga/configuration.nix
           home-manager.nixosModules.home-manager {
             home-manager.users.tmmy = import ./home/users/tmmy/tmmy-yoga.nix;
+            home-manager.backupFileExtension = "backup";
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
+        ];
+      };
+      felix-mbp = let
+        system = "x86_64-linux";
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePrediate = _: true;
+          };
+          overlays = [
+            inputs.polymc.overlay
+          ];
+        };
+      in nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = inputs // { pkgs = pkgs; };
+        modules = [
+	  disko.nixosModules.disko
+          ./nixos/felix-mbp/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.users.felix = import ./home/users/felix/felix-mbp.nix;
             home-manager.backupFileExtension = "backup";
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
