@@ -137,6 +137,33 @@
           }
         ];
       };
+      clara-mbp = let
+        system = "x86_64-linux";
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePrediate = _: true;
+          };
+          overlays = [
+            inputs.polymc.overlay
+          ];
+        };
+      in nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = inputs // { pkgs = pkgs; };
+        modules = [
+          disko.nixosModules.disko
+          ./nixos/clara-mbp/disk-config.nix
+          ./nixos/clara-mbp/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.users.clara = import ./home/users/clara/clara-mbp.nix;
+            home-manager.backupFileExtension = "backup";
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
+        ];
+      };
     };
 
     darwinConfigurations = {
