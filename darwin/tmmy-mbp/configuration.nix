@@ -53,6 +53,7 @@
      "battery"
      "coconutbattery"
      "amethyst"
+     #"ghostty"
     ];
     masApps = {
      #"Yoink" = 457622435;

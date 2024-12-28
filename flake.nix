@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    #nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -24,6 +24,10 @@
     disko = {
       url = "github:nix-community/disko/master";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
     };
 
     #nixpkgs-wayland = {
@@ -77,9 +81,21 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, nix-homebrew, disko, ... } @ inputs: let
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, nix-homebrew, disko, ghostty, ... } @ inputs: let
     inherit (self) outputs;
-  in 
+    unstable-overlay = final: prev: {
+      ghostty = import nixpkgs-unstable {
+        inherit (prev) system;
+        inherit (prev) config;
+      };
+    };
+    ghostty-overlay = final: prev: {
+      ghostty = import ghostty.packages {
+        inherit (prev) system;
+        inherit (prev) config;
+      };
+    };
+  in
   {
     nixosConfigurations = {
       tmmy-yoga = let
@@ -91,6 +107,8 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
+            unstable-overlay
+            ghostty-overlay
             inputs.polymc.overlay
             inputs.fenix.overlays.default
           ];
@@ -119,6 +137,8 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
+            unstable-overlay
+            ghostty-overlay
             inputs.polymc.overlay
           ];
         };
@@ -146,6 +166,8 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
+            unstable-overlay
+            ghostty-overlay
             inputs.polymc.overlay
           ];
         };
@@ -176,6 +198,7 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
+            unstable-overlay
             inputs.fenix.overlays.default
           ];
         };
