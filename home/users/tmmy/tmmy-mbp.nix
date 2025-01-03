@@ -64,7 +64,7 @@
     ../../development/rust.nix
     ../../development/c-cpp.nix
     ../../programs/alacritty.nix
-    ../../programs/ghostty.nix
+    #../../programs/ghostty.nix
     ../../programs/obsidian.nix
     ../../programs/podman.nix
   ];
