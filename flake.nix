@@ -84,7 +84,7 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, nix-homebrew, disko, ghostty, ... } @ inputs: let
     inherit (self) outputs;
     unstable-overlay = final: prev: {
-      ghostty = import nixpkgs-unstable {
+      unstable = import nixpkgs-unstable {
         inherit (prev) system;
         inherit (prev) config;
       };
@@ -94,6 +94,11 @@
         inherit (prev) system;
         inherit (prev) config;
       };
+    };
+    qemu-apple-m4-overlay = final: prev: {
+      qemu = prev.qemu.overrideAttrs (final: prev: {
+        patches = prev.patches ++ [ ./patches/qemu-fix-apple-m4.patch ];
+      });
     };
   in
   {
@@ -199,6 +204,7 @@
           };
           overlays = [
             unstable-overlay
+            qemu-apple-m4-overlay
             inputs.fenix.overlays.default
           ];
         };
