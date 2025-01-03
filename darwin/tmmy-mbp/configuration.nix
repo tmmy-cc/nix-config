@@ -1,8 +1,31 @@
 { self, config, pkgs, nix-homebrew, ... }:
 
 {
-  # Enable nix-command and flakes.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    # Enable linux builder qemu VM
+    linux-builder = {
+      enable = true;
+      ephemeral = true;
+      maxJobs = 4;
+      config = {
+        virtualisation = {
+          darwin-builder = {
+            diskSize = 20 * 1024;
+            memorySize = 8 * 1024;
+          };
+          cores = 10;
+        };
+      };
+    };
+
+    settings = {
+      # Prerequisite for using linux builder
+      trusted-users = [ "@admin" ];
+
+      # Enable nix-command and flakes.
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
