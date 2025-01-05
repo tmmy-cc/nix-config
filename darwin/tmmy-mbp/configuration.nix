@@ -1,8 +1,39 @@
 { self, config, pkgs, nix-homebrew, ... }:
 
 {
-  # Enable nix-command and flakes.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    # Enable linux builder qemu VM
+    linux-builder = {
+      enable = true;
+      ephemeral = true;
+      maxJobs = 4;
+      config = {
+        #services.openssh.enable = true;
+        virtualisation = {
+          #qemu.package = pkgs.qemu-apple-m4;
+          darwin-builder = {
+            diskSize = 20 * 1024;
+            memorySize = 8 * 1024;
+          };
+          cores = 8;
+        };
+      };
+    };
+
+    settings = {
+      # Prerequisite for using linux builder
+      trusted-users = [ "@admin" ];
+
+      # Enable nix-command and flakes.
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+
+    # Disable Nix channels since we have a flake based config
+    channel.enable = false;
+  };
+
+  # Debug Linux builder
+  # launchd.daemons.linux-builder = { serviceConfig = { StandardOutPath = "/var/log/darwin-builder.log"; StandardErrorPath = "/var/log/darwin-builder.log"; }; };
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
