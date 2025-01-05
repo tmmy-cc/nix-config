@@ -14,6 +14,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
+      general.import = [ "${pkgs.alacritty-theme.outPath}/tokyo_night.toml" ];
       env.TERM = "xterm-256color";
       window.padding = {
         x = 10;
