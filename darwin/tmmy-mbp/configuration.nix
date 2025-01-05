@@ -1,4 +1,4 @@
-{ self, config, pkgs, nix-homebrew, ... }:
+{ self, config, pkgs, ... }:
 
 {
   nix = {
@@ -135,7 +135,10 @@
   # Set home directory
   users.users.tmmy.home = "/Users/tmmy";
 
-  # Set Git commit hash for darwin-version.
+  # Allow Touch ID authentication
+  security.pam.enableSudoTouchIdAuth = true;
+
+  # Set Git commit hash for darwin version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
 
   # Used for backwards compatibility, please read the changelog before changing.
