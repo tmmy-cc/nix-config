@@ -74,6 +74,7 @@
     ../../programs/mpv.nix
     ../../programs/polymc.nix
     ../../programs/obsidian.nix
+    ../../programs/yazi.nix
   ];
 
   # Enable compose key

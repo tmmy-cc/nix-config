@@ -68,5 +68,6 @@
     #../../programs/ghostty.nix
     ../../programs/obsidian.nix
     ../../programs/podman.nix
+    ../../programs/yazi.nix
   ];
 }
