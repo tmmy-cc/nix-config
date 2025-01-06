@@ -21,6 +21,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixGL = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       url = "github:nix-community/disko/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -251,8 +256,16 @@
     homeConfigurations = {
       "thomasstahl@imar123" = let
         system = "x86_64-linux";
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePrediate = _: true;
+          };
+        };
       in home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+        inherit pkgs;
+        #extraSpecialArgs = inputs // { pkgs = pkgs; };
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           ./home/users/thomasstahl/thomasstahl-imar123.nix

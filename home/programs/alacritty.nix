@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    alacritty
     alacritty-theme
     (nerdfonts.override { fonts = ["JetBrainsMono"]; })
   ];
@@ -13,6 +12,7 @@
   # Enable alacritty
   programs.alacritty = {
     enable = true;
+    package = (config.lib.nixGL.wrap pkgs.alacritty);
     settings = {
       general.import = [ "${pkgs.alacritty-theme.outPath}/tokyo_night.toml" ];
       env.TERM = "xterm-256color";
@@ -40,7 +40,7 @@
           family = "JetBrainsMono Nerd Font";
           style = "Italic";
         };
-        size = 14;
+        size = (if pkgs.stdenv.isDarwin then 14 else 11);
       };
       selection.save_to_clipboard = true;
     };
