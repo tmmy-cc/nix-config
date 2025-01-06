@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   # Let Home Manager install and manage itself.
@@ -24,6 +24,9 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
   ];
+
+  # Enable nixGL
+  nixGL.packages = inputs.nixGL.packages;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.

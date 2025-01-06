@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    wezterm
     (nerdfonts.override { fonts = ["JetBrainsMono"]; })
   ];
 
@@ -12,6 +11,7 @@
   # Enable wezterm
   programs.wezterm = {
     enable = true;
+    package = (config.lib.nixGL.wrap pkgs.wezterm);
     extraConfig = ''
       local wezterm = require 'wezterm'
       local act = wezterm.action
@@ -19,7 +19,7 @@
 
       return {
         font = wezterm.font("JetBrains Mono"),
-        font_size = 14.0,
+        font_size = ${toString (if pkgs.stdenv.isDarwin then 14 else 11)}.0,
         color_scheme = "Tokyo Night",
         front_end = "WebGpu",
         window_background_opacity = 0.7,
