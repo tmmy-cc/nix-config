@@ -69,6 +69,7 @@
     ../../programs/chromium.nix
     ../../programs/hyprland.nix
     ../../programs/alacritty.nix
+    ../../programs/wezterm.nix
     ../../programs/mpv.nix
     ../../programs/yazi.nix
   ];
