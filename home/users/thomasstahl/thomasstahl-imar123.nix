@@ -70,6 +70,7 @@
     ../../programs/hyprland.nix
     ../../programs/alacritty.nix
     ../../programs/mpv.nix
+    ../../programs/yazi.nix
   ];
 
   # Enable compose key
