@@ -374,6 +374,21 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1735388221,
+        "narHash": "sha256-e5IOgjQf0SZcFCEV/gMGrsI0gCJyqOKShBQU0iiM3Kg=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "7c674c6734f61157e321db595dbfcd8523e04e19",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1687274257,
@@ -401,6 +416,21 @@
         "ref": "release-24.11",
         "repo": "nixpkgs",
         "type": "github"
+      }
+    },
+    "nixpkgs-tmmy": {
+      "locked": {
+        "lastModified": 1735839122,
+        "narHash": "sha256-DtaxCeMil8gJpVke2jDhlCsiCpjOXBZ1FxaGj8YEAN8=",
+        "ref": "refs/heads/tmmy/develop",
+        "rev": "898dbdba9b5177d2d25aecb37f49b09af8dab5f0",
+        "revCount": 732192,
+        "type": "git",
+        "url": "file:///home/tmmy/nixpkgs"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/tmmy/nixpkgs"
       }
     },
     "nixpkgs-unstable": {
@@ -503,7 +533,9 @@
         "homebrew-core": "homebrew-core",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-tmmy": "nixpkgs-tmmy",
         "nixpkgs-unstable": "nixpkgs-unstable_2",
         "polymc": "polymc"
       }

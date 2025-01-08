@@ -61,6 +61,7 @@
 
   imports = [
     ./common.nix
+    ../../desktop/gnome/battery-health-charging.nix
     ../../programs/bitwarden.nix
     ../../programs/brave.nix
     ../../programs/chromium.nix
