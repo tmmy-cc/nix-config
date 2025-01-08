@@ -4,6 +4,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-tmmy.url = "github:tmmy-cc/nixpkgs/tmmy/develop";
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -81,10 +84,16 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, nix-homebrew, disko, ghostty, ... } @ inputs: let
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-tmmy, nixos-hardware, nix-darwin, home-manager, nix-homebrew, disko, ghostty, ... } @ inputs: let
     inherit (self) outputs;
-    unstable-overlay = final: prev: {
-      ghostty = import nixpkgs-unstable {
+    nixpkgs-unstable-overlay = final: prev: {
+      unstable = import nixpkgs-unstable {
+        inherit (prev) system;
+        inherit (prev) config;
+      };
+    };
+    nixpkgs-tmmy-overlay = final: prev: {
+      tmmy = import nixpkgs-tmmy {
         inherit (prev) system;
         inherit (prev) config;
       };
@@ -107,7 +116,7 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
-            unstable-overlay
+            nixpkgs-unstable-overlay
             ghostty-overlay
             inputs.polymc.overlay
             inputs.fenix.overlays.default
@@ -137,7 +146,8 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
-            unstable-overlay
+            nixpkgs-unstable-overlay
+            nixpkgs-tmmy-overlay
             ghostty-overlay
             inputs.polymc.overlay
           ];
@@ -146,6 +156,7 @@
         inherit system;
         specialArgs = inputs // { pkgs = pkgs; };
         modules = [
+          nixos-hardware.nixosModules.apple-macbook-pro-11-1
           disko.nixosModules.disko
           ./nixos/felix-mbp/disk-config.nix
           ./nixos/felix-mbp/configuration.nix
@@ -166,7 +177,8 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
-            unstable-overlay
+            nixpkgs-unstable-overlay
+            nixpkgs-tmmy-overlay
             ghostty-overlay
             inputs.polymc.overlay
           ];
@@ -175,6 +187,7 @@
         inherit system;
         specialArgs = inputs // { pkgs = pkgs; };
         modules = [
+          nixos-hardware.nixosModules.apple-macbook-pro-11-1
           disko.nixosModules.disko
           ./nixos/clara-mbp/disk-config.nix
           ./nixos/clara-mbp/configuration.nix
@@ -198,7 +211,7 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
-            unstable-overlay
+            nixpkgs-unstable-overlay
             inputs.fenix.overlays.default
           ];
         };

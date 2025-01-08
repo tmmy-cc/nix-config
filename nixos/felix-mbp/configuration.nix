@@ -10,6 +10,11 @@
     ./hardware-configuration.nix
   ];
 
+  # Apple SMC driver
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    (config.boot.kernelPackages.callPackage "${pkgs.tmmy.path}/pkgs/os-specific/linux/apple/applesmc-next/default.nix" {})
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
