@@ -12,7 +12,8 @@ return {
   },
   opts = {
     sources = {
-      default = { "lsp", "path", "snippets", "buffer", "ripgrep" },
+      -- default = { "lsp", "path", "snippets", "buffer", "ripgrep" },
+      default = { "lsp", "path", "snippets", "buffer" },
 
       -- Disable command line completions
       cmdline = {},
