@@ -61,5 +61,6 @@
     ../../programs/starship.nix
     ../../programs/tmux.nix
     ../../programs/zsh.nix
+    ../../programs/zoxide.nix
   ];
 }
