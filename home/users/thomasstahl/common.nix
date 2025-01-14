@@ -73,9 +73,10 @@
   imports = [
     ../../programs/btop.nix
     ../../programs/eza.nix
-    #../../programs/neovim.nix
+    ../../programs/neovim.nix
     ../../programs/starship.nix
     ../../programs/tmux.nix
     ../../programs/zsh.nix
+    ../../programs/zoxide.nix
   ];
 }
