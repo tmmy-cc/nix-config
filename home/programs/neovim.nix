@@ -5,17 +5,23 @@ let
 in
 {
   home.packages = with pkgs; [
-    ripgrep
-    fd
-    fzf
+    #ripgrep
+    #fd
+    #fzf
     # LSPs
     lua-language-server
     vscode-langservers-extracted
-    clang-tools
+    llvmPackages_19.clang-tools
     python311Packages.python-lsp-server
     rust-analyzer-unwrapped
     yaml-language-server
     nil
+    pyright
+    ruff
+    ruff-lsp
+    shfmt
+    stylua
+    vscode-extensions.vadimcn.vscode-lldb
     #marksman
     #dockerfile-language-server-nodejs
     #docker-compose-language-service
