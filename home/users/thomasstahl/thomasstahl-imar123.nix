@@ -25,10 +25,15 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    xclip
   ];
 
   # Enable nixGL
   nixGL.packages = inputs.nixGL.packages;
+
+  targets.genericLinux.enable = true;
+  xdg.mime.enable = true;
+  xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
