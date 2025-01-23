@@ -84,6 +84,10 @@
       url = "github:nikitabobko/homebrew-tap";
       flake = false;
     };
+    homebrew-cross-toolchains = {
+      url = "github:messense/homebrew-macos-cross-toolchains";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, nix-homebrew, disko, ghostty, ... } @ inputs: let
@@ -232,7 +236,8 @@
                 "homebrew/homebrew-core" = inputs.homebrew-core;
                 "homebrew/homebrew-cask" = inputs.homebrew-cask;
                 "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-                #"homebrew/homebrew-aerospace" = inputs.homebrew-aerospace;
+                "nikitabobko/homebrew-tap" = inputs.homebrew-aerospace;
+                "messense/homebrew-macos-cross-toolchains" = inputs.homebrew-cross-toolchains;
               };
               # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`
               mutableTaps = false;
