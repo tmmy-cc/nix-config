@@ -9,7 +9,7 @@
   ];
 
   home.sessionVariables = {
-    TERM = "ghostty";
+    TERM = "term-256color";
   };
 
   # Enable font config
