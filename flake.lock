@@ -292,6 +292,22 @@
         "type": "github"
       }
     },
+    "homebrew-cross-toolchains": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1727097868,
+        "narHash": "sha256-tNLvlVXHze5etN2K+p9OScm8v8zPWaTmSPrxARdQMRc=",
+        "owner": "messense",
+        "repo": "homebrew-macos-cross-toolchains",
+        "rev": "2a0a4036993160f555a3df86a53a91a89a2701ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "messense",
+        "repo": "homebrew-macos-cross-toolchains",
+        "type": "github"
+      }
+    },
     "libnbtplusplus": {
       "flake": false,
       "locked": {
@@ -515,6 +531,7 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "homebrew-cross-toolchains": "homebrew-cross-toolchains",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixGL": "nixGL",

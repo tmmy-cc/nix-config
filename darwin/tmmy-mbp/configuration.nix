@@ -75,16 +75,19 @@
     enable = true;
     brews = [
       "mas"
+      "aarch64-unknown-linux-gnu"
+      "x86_64-unknown-linux-gnu"
     ];
     casks = [
-     #"sanesidebuttons"
-     "mac-mouse-fix"
-     "iina"
-     "the-unarchiver"
-     "battery"
-     "coconutbattery"
-     "amethyst"
-     #"ghostty"
+      #"sanesidebuttons"
+      "mac-mouse-fix"
+      "iina"
+      "the-unarchiver"
+      "battery"
+      "coconutbattery"
+      "amethyst"
+      #"aerospace"
+      #"ghostty"
     ];
     masApps = {
      #"Yoink" = 457622435;
