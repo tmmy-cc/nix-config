@@ -254,6 +254,58 @@
           }
         ];
       };
+
+      thst-mbp = let
+        system = "aarch64-darwin";
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePrediate = _: true;
+          };
+          overlays = [
+            unstable-overlay
+            qemu-apple-m4-overlay
+            inputs.fenix.overlays.default
+          ];
+        };
+      in nix-darwin.lib.darwinSystem {
+        inherit system;
+        specialArgs = inputs // { pkgs = pkgs; };
+        modules = [
+          nix-homebrew.darwinModules.nix-homebrew
+          ({ config, ... }: {
+            homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
+            nix-homebrew = {
+              # Install Homebrew under the default prefix
+              enable = true;
+              # Apple Silicon only
+              enableRosetta = true;
+              # User owning the Homebrew prefix
+              user = "thomasstahl";
+              # Declarative tap mamagement
+              taps = {
+                "homebrew/homebrew-core" = inputs.homebrew-core;
+                "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                "nikitabobko/homebrew-tap" = inputs.homebrew-aerospace;
+                "messense/homebrew-macos-cross-toolchains" = inputs.homebrew-cross-toolchains;
+              };
+              # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`
+              mutableTaps = false;
+              # Automatically migrate existing Homebrew installations
+              #autoMigrate = true;
+            };
+          })
+          ./darwin/thomasstahl-mbp/configuration.nix
+          home-manager.darwinModules.home-manager {
+             home-manager.users.thomasstahl = import ./home/users/thomasstahl/thomasstahl-thst-mbp.nix;
+             home-manager.backupFileExtension = "backup";
+             home-manager.useGlobalPkgs = true;
+             home-manager.useUserPackages = true;
+          }
+        ];
+      };
       # Expose the package set, including overlays, for convenience.
       #darwinPackages = self.darwinConfigurations."tmmy-mbp".pkgs;
     };
