@@ -31,6 +31,7 @@
   # Enable git
   programs.git = {
     enable = true;
+    lfs.enable = true;
     userName = "Thomas Stahl";
     userEmail = "thomas.stahl@imar-navigation.de";
   };
