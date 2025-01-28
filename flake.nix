@@ -109,6 +109,13 @@
         patches = prev.patches ++ [ ./patches/qemu-fix-apple-m4.patch ];
       });
     };
+
+    nixosModules = {
+    };
+
+    darwinModules = {
+      git = import ./modules/darwin/git.nix;
+    };
   in
   {
     nixosConfigurations = {
@@ -274,6 +281,9 @@
         specialArgs = inputs // { pkgs = pkgs; };
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
+
+          darwinModules.git
+
           ({ config, ... }: {
             homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
             nix-homebrew = {
