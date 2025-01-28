@@ -66,6 +66,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
     homebrew-core = {
@@ -90,7 +95,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, nix-homebrew, disko, ghostty, ... } @ inputs: let
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, nix-homebrew, disko, ghostty, mac-app-util, ... } @ inputs: let
     inherit (self) outputs;
     unstable-overlay = final: prev: {
       unstable = import nixpkgs-unstable {
@@ -229,6 +234,8 @@
         specialArgs = inputs // { pkgs = pkgs; };
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
+          mac-app-util.darwinModules.default
+
           ({ config, ... }: {
             homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
             nix-homebrew = {
@@ -254,10 +261,13 @@
           })
           ./darwin/tmmy-mbp/configuration.nix
           home-manager.darwinModules.home-manager {
-             home-manager.users.tmmy = import ./home/users/tmmy/tmmy-mbp.nix;
-             home-manager.backupFileExtension = "backup";
-             home-manager.useGlobalPkgs = true;
-             home-manager.useUserPackages = true;
+            home-manager.sharedModules = [
+              mac-app-util.homeManagerModules.default
+            ];
+            home-manager.users.tmmy = import ./home/users/tmmy/tmmy-mbp.nix;
+            home-manager.backupFileExtension = "backup";
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
           }
         ];
       };
@@ -281,6 +291,7 @@
         specialArgs = inputs // { pkgs = pkgs; };
         modules = [
           nix-homebrew.darwinModules.nix-homebrew
+          mac-app-util.darwinModules.default
 
           darwinModules.git
 
@@ -309,10 +320,13 @@
           })
           ./darwin/thomasstahl-mbp/configuration.nix
           home-manager.darwinModules.home-manager {
-             home-manager.users.thomasstahl = import ./home/users/thomasstahl/thomasstahl-thst-mbp.nix;
-             home-manager.backupFileExtension = "backup";
-             home-manager.useGlobalPkgs = true;
-             home-manager.useUserPackages = true;
+            home-manager.sharedModules = [
+              mac-app-util.homeManagerModules.default
+            ];
+            home-manager.users.thomasstahl = import ./home/users/thomasstahl/thomasstahl-thst-mbp.nix;
+            home-manager.backupFileExtension = "backup";
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
           }
         ];
       };
