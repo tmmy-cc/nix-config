@@ -25,7 +25,6 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    COMMITLINT_CONFIG = "$HOME/.commitlint.yaml";
   };
 
   # Enable git
@@ -74,5 +73,6 @@
     ../../programs/tmux.nix
     ../../programs/zsh.nix
     ../../programs/zoxide.nix
+    ../../programs/commitlint.nix
   ];
 }

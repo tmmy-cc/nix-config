@@ -97,6 +97,8 @@
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, nix-homebrew, disko, ghostty, mac-app-util, ... } @ inputs: let
     inherit (self) outputs;
+    tmmy-overlay = final: prev: import ./pkgs/overlay.nix inputs final prev;
+
     unstable-overlay = final: prev: {
       unstable = import nixpkgs-unstable {
         inherit (prev) system;
@@ -133,6 +135,7 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
+            tmmy-overlay
             unstable-overlay
             ghostty-overlay
             inputs.polymc.overlay
@@ -163,6 +166,7 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
+            tmmy-overlay
             unstable-overlay
             ghostty-overlay
             inputs.polymc.overlay
@@ -192,6 +196,7 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
+            tmmy-overlay
             unstable-overlay
             ghostty-overlay
             inputs.polymc.overlay
@@ -224,6 +229,7 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
+            tmmy-overlay
             unstable-overlay
             qemu-apple-m4-overlay
             inputs.fenix.overlays.default
@@ -281,6 +287,7 @@
             allowUnfreePrediate = _: true;
           };
           overlays = [
+            tmmy-overlay
             unstable-overlay
             qemu-apple-m4-overlay
             inputs.fenix.overlays.default
@@ -343,6 +350,10 @@
             allowUnfree = true;
             allowUnfreePrediate = _: true;
           };
+          overlays = [
+            tmmy-overlay
+            unstable-overlay
+          ];
         };
       in home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
