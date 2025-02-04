@@ -62,5 +62,6 @@
     ../../programs/tmux.nix
     ../../programs/zsh.nix
     ../../programs/zoxide.nix
+    ../../programs/commitlint.nix
   ];
 }
