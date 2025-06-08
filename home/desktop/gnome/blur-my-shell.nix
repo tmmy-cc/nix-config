@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    gnome.blur-my-shell
+    gnomeExtensions.blur-my-shell
   ];
 
   dconf.settings = {

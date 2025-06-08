@@ -65,6 +65,7 @@
     ../../development/c-cpp.nix
     ../../desktop/gnome/gnome-tweaks.nix
     ../../desktop/gnome/forge.nix
+    ../../desktop/gnome/blur-my-shell.nix
     ../../programs/bitwarden.nix
     ../../programs/brave.nix
     ../../programs/chromium.nix
