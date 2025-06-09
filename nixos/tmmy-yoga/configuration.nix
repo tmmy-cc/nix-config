@@ -106,6 +106,14 @@
     enable = true;
   };
 
+  # Enable battery conservation mode for Lenovo Yoga Slim 7i
+  # see https://linrunner.de/tlp/settings/bc-vendors.html#lenovo-non-thinkpad-series
+  services.udev.packages = [
+    (pkgs.writeTextDir "etc/udev/rules.d/99-ideapad-acpi.rules" ''
+      SUBSYSTEM=="platform", DRIVER=="ideapad_acpi", ATTR{conservation_mode}="1"
+    '')
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
