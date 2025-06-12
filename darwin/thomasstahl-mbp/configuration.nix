@@ -8,12 +8,15 @@
       ephemeral = true;
       maxJobs = 4;
       config = {
-        #services.openssh.enable = true;
+        nix.settings = {
+          experimental-features = [ "nix-command" "flakes" ];
+        };
+        users.users."builder".extraGroups = [ "wheel" ];
+        security.sudo.wheelNeedsPassword = false;
         virtualisation = {
-          #qemu.package = pkgs.qemu-apple-m4;
           darwin-builder = {
-            diskSize = 20 * 1024;
-            memorySize = 8 * 1024;
+            diskSize = 40 * 1024;
+            memorySize = 12 * 1024;
           };
           cores = 8;
         };
