@@ -47,6 +47,14 @@
     enable = true;
   };
 
+  programs.direnv = {
+    enable = true;
+  };
+
+  services.karabiner-elements = {
+    enable = true;
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -75,17 +83,17 @@
     enable = true;
     brews = [
       "mas"
-      "aarch64-unknown-linux-gnu"
-      "x86_64-unknown-linux-gnu"
+      #"aarch64-unknown-linux-gnu"
+      #"x86_64-unknown-linux-gnu"
     ];
     casks = [
-      #"sanesidebuttons"
       "mac-mouse-fix"
       "iina"
       "the-unarchiver"
       "battery"
       "coconutbattery"
       "amethyst"
+      "chromium"
       #"aerospace"
       #"ghostty"
     ];

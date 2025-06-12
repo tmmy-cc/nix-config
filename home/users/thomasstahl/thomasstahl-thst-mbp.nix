@@ -69,5 +69,6 @@
     ../../programs/obsidian.nix
     ../../programs/podman.nix
     ../../programs/yazi.nix
+    ../../programs/karabiner-elements
   ];
 }

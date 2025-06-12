@@ -116,6 +116,16 @@
         patches = prev.patches ++ [ ./patches/qemu-fix-apple-m4.patch ];
       });
     };
+    karabiner-elements-overlay = final: prev: {
+      karabiner-elements = prev.karabiner-elements.overrideAttrs (old: {
+        version = "14.13.0";
+
+        src = prev.fetchurl {
+          inherit (old.src) url;
+          hash = "sha256-gmJwoht/Tfm5qMecmq1N6PSAIfWOqsvuHU8VDJY8bLw=";
+        };
+      });
+    };
 
     nixosModules = {
     };
@@ -290,6 +300,7 @@
             tmmy-overlay
             unstable-overlay
             qemu-apple-m4-overlay
+            karabiner-elements-overlay
             inputs.fenix.overlays.default
           ];
         };
