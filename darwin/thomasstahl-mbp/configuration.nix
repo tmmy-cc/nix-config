@@ -94,6 +94,7 @@
       "coconutbattery"
       "amethyst"
       "chromium"
+      "wine-stable"
       #"aerospace"
       #"ghostty"
     ];
