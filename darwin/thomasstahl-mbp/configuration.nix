@@ -4,7 +4,7 @@
   nix = {
     # Enable linux builder qemu VM
     linux-builder = {
-      enable = true;
+      enable = false;
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -17,7 +17,7 @@
         };
         users.users."builder".extraGroups = [ "wheel" ];
         security.sudo.wheelNeedsPassword = false;
-	boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+        boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
         virtualisation = {
           darwin-builder = {
             diskSize = 40 * 1024;
@@ -38,6 +38,12 @@
 
     # Disable Nix channels since we have a flake based config
     channel.enable = false;
+  };
+
+  # Enable rossetta builder
+  nix-rosetta-builder = {
+    enable = true;
+    onDemand = true;
   };
 
   # Debug Linux builder

@@ -4,7 +4,7 @@
   nix = {
     # Enable linux builder qemu VM
     linux-builder = {
-      enable = true;
+      enable = false;
       ephemeral = true;
       maxJobs = 4;
       config = {
@@ -34,6 +34,12 @@
 
   # Debug Linux builder
   # launchd.daemons.linux-builder = { serviceConfig = { StandardOutPath = "/var/log/darwin-builder.log"; StandardErrorPath = "/var/log/darwin-builder.log"; }; };
+
+  # Enable rossetta builder
+  nix-rosetta-builder = {
+    enable = true;
+    onDemand = true;
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
