@@ -21,6 +21,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-rosetta-builder = {
+      url = "github:cpick/nix-rosetta-builder";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixGL = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -95,7 +100,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, nix-homebrew, disko, ghostty, mac-app-util, ... } @ inputs: let
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-darwin, nix-rosetta-builder, nix-homebrew, disko, ghostty, mac-app-util, ... } @ inputs: let
     inherit (self) outputs;
     tmmy-overlay = final: prev: import ./pkgs/overlay.nix inputs final prev;
 
@@ -249,6 +254,7 @@
         inherit system;
         specialArgs = inputs // { pkgs = pkgs; };
         modules = [
+          nix-rosetta-builder.darwinModules.default
           nix-homebrew.darwinModules.nix-homebrew
           mac-app-util.darwinModules.default
 
@@ -308,6 +314,7 @@
         inherit system;
         specialArgs = inputs // { pkgs = pkgs; };
         modules = [
+          nix-rosetta-builder.darwinModules.default
           nix-homebrew.darwinModules.nix-homebrew
           mac-app-util.darwinModules.default
 
