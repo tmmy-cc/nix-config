@@ -33,6 +33,9 @@
     lfs.enable = true;
     userName = "Thomas Stahl";
     userEmail = "thomas.stahl@imar-navigation.de";
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
   };
 
   home.packages = with pkgs; [

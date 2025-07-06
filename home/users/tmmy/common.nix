@@ -22,6 +22,9 @@
     enable = true;
     userName = "Thomas Stahl";
     userEmail = "me@tmmy.cc";
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
   };
 
   home.packages = with pkgs; [
