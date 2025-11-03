@@ -43,6 +43,8 @@
   # Enable rossetta builder
   nix-rosetta-builder = {
     enable = true;
+    memory = "12GiB";
+    cores = 8;
     onDemand = true;
   };
 
