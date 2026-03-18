@@ -20,8 +20,8 @@
         boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
         virtualisation = {
           darwin-builder = {
-            diskSize = 40 * 1024;
-            memorySize = 12 * 1024;
+            diskSize = 100 * 1024;
+            memorySize = 16 * 1024;
           };
           cores = 8;
         };
@@ -43,7 +43,7 @@
   # Enable rossetta builder
   nix-rosetta-builder = {
     enable = true;
-    memory = "12GiB";
+    memory = "16GiB";
     cores = 8;
     onDemand = true;
   };
