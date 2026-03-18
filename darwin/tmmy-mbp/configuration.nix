@@ -5,15 +5,23 @@
     # Enable linux builder qemu VM
     linux-builder = {
       enable = false;
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
       ephemeral = true;
       maxJobs = 4;
       config = {
-        #services.openssh.enable = true;
+        nix.settings = {
+          experimental-features = [ "nix-command" "flakes" ];
+        };
+        users.users."builder".extraGroups = [ "wheel" ];
+        security.sudo.wheelNeedsPassword = false;
+        boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
         virtualisation = {
-          #qemu.package = pkgs.qemu-apple-m4;
           darwin-builder = {
-            diskSize = 20 * 1024;
-            memorySize = 8 * 1024;
+            diskSize = 100 * 1024;
+            memorySize = 16 * 1024;
           };
           cores = 8;
         };
@@ -32,14 +40,16 @@
     channel.enable = false;
   };
 
-  # Debug Linux builder
-  # launchd.daemons.linux-builder = { serviceConfig = { StandardOutPath = "/var/log/darwin-builder.log"; StandardErrorPath = "/var/log/darwin-builder.log"; }; };
-
   # Enable rossetta builder
   nix-rosetta-builder = {
     enable = true;
+    memory = "16GiB";
+    cores = 8;
     onDemand = true;
   };
+
+  # Debug Linux builder
+  # launchd.daemons.linux-builder = { serviceConfig = { StandardOutPath = "/var/log/darwin-builder.log"; StandardErrorPath = "/var/log/darwin-builder.log"; }; };
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -50,6 +60,14 @@
   };
 
   programs.zsh = {
+    enable = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+  };
+
+  services.karabiner-elements = {
     enable = true;
   };
 
@@ -81,17 +99,17 @@
     enable = true;
     brews = [
       "mas"
-      "aarch64-unknown-linux-gnu"
-      "x86_64-unknown-linux-gnu"
+      "ffmpeg"
     ];
     casks = [
-      #"sanesidebuttons"
       "mac-mouse-fix"
       "iina"
       "the-unarchiver"
       "battery"
       "coconutbattery"
       "amethyst"
+      "chromium"
+      "wine-stable"
       #"aerospace"
       #"ghostty"
     ];

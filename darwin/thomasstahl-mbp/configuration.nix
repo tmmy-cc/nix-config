@@ -100,8 +100,6 @@
     brews = [
       "mas"
       "ffmpeg"
-      #"aarch64-unknown-linux-gnu"
-      #"x86_64-unknown-linux-gnu"
     ];
     casks = [
       "mac-mouse-fix"
