@@ -89,6 +89,7 @@
     wget
     curl
     mkalias
+    wireguard-tools
   ];
 
   environment.variables = {
