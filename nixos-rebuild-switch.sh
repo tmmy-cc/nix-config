@@ -1,2 +1,2 @@
-#!/bin/sh 
-nixos-rebuild switch --flake ".?submodules=1"
+#!/bin/sh
+nix run .#nixos-rebuild -- switch --flake ".?submodules=1"

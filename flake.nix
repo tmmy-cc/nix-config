@@ -173,8 +173,43 @@
     darwinModules = {
       git = import ./modules/darwin/git.nix;
     };
+
+    nixosRebuildPackages = {
+      # The target's nixos-rebuild is a Linux script. Avoid re-executing it
+      # locally when rebuilding a remote NixOS host from macOS.
+      aarch64-darwin = let
+        pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+      in pkgs.writeShellScriptBin "nixos-rebuild" ''
+        export _NIXOS_REBUILD_REEXEC=1
+        exec ${pkgs.nixos-rebuild}/bin/nixos-rebuild "$@"
+      '';
+      x86_64-darwin = let
+        pkgs = nixpkgs.legacyPackages.x86_64-darwin;
+      in pkgs.writeShellScriptBin "nixos-rebuild" ''
+        export _NIXOS_REBUILD_REEXEC=1
+        exec ${pkgs.nixos-rebuild}/bin/nixos-rebuild "$@"
+      '';
+      x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixos-rebuild;
+    };
   in
   {
+    apps = builtins.mapAttrs (system: package: {
+      nixos-rebuild = {
+        type = "app";
+        program = "${package}/bin/nixos-rebuild";
+      };
+    }) nixosRebuildPackages;
+
+    packages = builtins.mapAttrs (system: package: {
+      nixos-rebuild = package;
+    }) nixosRebuildPackages;
+
+    devShells = builtins.mapAttrs (system: package: {
+      default = nixpkgs.legacyPackages.${system}.mkShell {
+        packages = [ package ];
+      };
+    }) nixosRebuildPackages;
+
     nixosConfigurations = {
       tmmy-yoga = let
         system = "x86_64-linux";
