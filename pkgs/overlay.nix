@@ -1,6 +1,11 @@
-inputs: final: prev:
-let inherit (final) callPackage;
+{ brewSrc }:
+final: _prev:
+let
+  localPackages = import ./all-packages.nix {
+    pkgs = final;
+    inherit brewSrc;
+  };
 in
 {
-  commitlint = callPackage ./commitlint/package.nix { };
+  inherit (localPackages) commitlint homebrew-tahoe;
 }
