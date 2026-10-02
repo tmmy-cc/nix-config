@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    steam
+  home.packages = [
+    pkgs.unstable.steam
   ];
 }
