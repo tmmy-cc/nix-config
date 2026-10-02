@@ -67,9 +67,9 @@
     enable = true;
   };
 
-  services.karabiner-elements = {
-    enable = true;
-  };
+  #services.karabiner-elements = {
+  #  enable = true;
+  #};
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
