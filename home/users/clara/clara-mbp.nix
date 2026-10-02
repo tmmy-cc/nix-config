@@ -6,6 +6,8 @@
   home.username = "clara";
   home.homeDirectory = "/home/clara";
 
+  programs.polymc.javaPackage = pkgs.unstable.jdk25_headless;
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
@@ -67,6 +69,7 @@
     ../../programs/alacritty.nix
     ../../programs/mpv.nix
     ../../programs/polymc.nix
+    ../../programs/steam.nix
   ];
 
   # Enable compose key
