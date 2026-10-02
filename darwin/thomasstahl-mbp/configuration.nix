@@ -29,6 +29,11 @@
     };
 
     settings = {
+      substituters = [
+        "http://thst.lin.my.imar.de:5080/glpat-jGenRONS4mihyazbsbJyq286MQp1OmZlCA.01.0y1rl3kgo/?priority=10&trusted=true"
+        "https://cache.nixos.org/"
+      ];
+
       # Prerequisite for using linux builder
       trusted-users = [ "@admin" ];
 
@@ -88,11 +93,13 @@
     # utils
     wget
     curl
+    unstable.jdk25_headless
     mkalias
     wireguard-tools
   ];
 
   environment.variables = {
+    JAVA_HOME = "${pkgs.unstable.jdk25_headless}/lib/openjdk";
     TERMINFO = "/usr/share/terminfo/";
   };
 
