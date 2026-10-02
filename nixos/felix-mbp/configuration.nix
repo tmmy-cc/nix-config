@@ -45,6 +45,8 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  hardware.graphics.enable32Bit = true;
+
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -87,6 +89,14 @@
   users.users.felix = {
     isNormalUser = true;
     description = "Felix Stahl";
+    extraGroups = [ "networkmanager" ];
+    shell = pkgs.zsh;
+    hashedPassword = "$y$j9T$ooq/WcPjN.5dR.Q1wALrW.$YtPj.CB6NCLYtVoX9gtpWuFed7Fnt9pgcJdEuM9NYR7";
+  };
+
+  users.users.tmmy = {
+    isNormalUser = true;
+    description = "Thommy";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     hashedPassword = "$y$j9T$UeLpk9xFodZMSBTacrY/e/$epMNcqLEndlbF7Fyt5YzjpyWd9so0Yb/wgYmVjGc2G5";
@@ -138,6 +148,10 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHrHUbpqkNC1JmmKzJwfDxKJTsMKMFa3SW+XWwtkRbD thomasstahl@thst-mbp"
+  ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
