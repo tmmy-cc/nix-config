@@ -38,26 +38,90 @@ Read VM logs with:
 
 # Docker
 
+## Initialize Docker and Colima on macOS
+
 The Macs use the Docker CLI with Colima. Home Manager supplies a Colima template
 with Apple virtualization, Rosetta, 4 cores, 4 GiB RAM, and 100 GiB disk space.
-Start the container VM and select its Docker context after rebuilding:
+Apply the configuration first, choosing the matching host:
 
 ```shell
-colima start
+darwin-rebuild switch --flake .#tmmy-mbp
+```
+
+Open a new terminal, then initialize and start Colima as your regular user:
+
+```shell
+unset DOCKER_HOST DOCKER_CONTEXT
+colima start --runtime docker --vm-type vz --vz-rosetta
 docker context use colima
+colima status
+docker version
 docker run --rm hello-world
 docker compose version
 docker buildx version
 ```
 
-Stop the VM with `colima stop`. The template applies to new Colima profiles;
-existing profiles retain their configuration. Container images and volumes persist
-across VM restarts.
+The first start downloads and creates the container VM. Subsequent starts use
+`colima start`; stop it with `colima stop`. Container images and volumes persist
+across VM restarts. This VM is separate from the vzvm Nix builder.
+
+The template applies to new Colima profiles. Existing profiles retain their
+configuration; inspect `~/.colima/default/colima.yaml` and use
+`colima start --edit` to change it. VM type and architecture are fixed when the
+profile is created. See the [Colima configuration documentation](https://colima.run/docs/configuration/).
+
+## Run x86-64 containers on Apple Silicon
+
+Colima's ARM Linux VM runs `linux/amd64` containers through Rosetta when `vz` and
+`rosetta: true` are enabled. Select the image platform explicitly:
+
+```shell
+docker run --rm --platform linux/amd64 alpine uname -m
+```
+
+The expected output is `x86_64`. ARM containers run natively:
+
+```shell
+docker run --rm --platform linux/arm64 alpine uname -m
+```
+
+For Compose, set the platform on the service:
+
+```yaml
+services:
+  app:
+    image: your-image:tag
+    platform: linux/amd64
+```
+
+Rosetta translates x86-64 user-space binaries; the guest kernel remains ARM.
+Native ARM images are preferable when available. Rosetta's compatibility depends
+on the macOS version and the Colima guest kernel; the Nix builder's Linux 6.12 pin
+applies only to the separate Nix builder VM. See [Colima's Rosetta settings](https://colima.run/docs/configuration/#rosetta)
+and [Docker's platform option](https://docs.docker.com/reference/cli/docker/container/run/).
+
+## Initialize Docker on Linux
 
 The NixOS hosts run Docker Engine and grant their configured regular users access
-through the `docker` group. Log in again after switching to pick up group changes.
+through the `docker` group. Apply the configuration, replacing the host name as
+needed:
+
+```shell
+sudo nixos-rebuild switch --flake .#tmmy-yoga
+```
+
+Log out and back in to pick up group membership, then verify Docker:
+
+```shell
+systemctl status docker
+docker run --rm hello-world
+docker compose version
+docker buildx version
+```
+
 The standalone Home Manager configuration supplies Docker client tools; its host
-must provide Docker Engine and socket access.
+must provide Docker Engine and socket access. The x86-64 NixOS hosts run
+`linux/amd64` containers natively.
 
 # Use with nixos-anywhere
 
