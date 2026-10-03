@@ -1,31 +1,45 @@
-{ self, config, pkgs, ... }:
+{
+  self,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   nix = {
-    # Enable linux builder qemu VM
+    # Run Linux builds through Apple Virtualization.framework and Rosetta.
     linux-builder = {
-      enable = false;
+      enable = true;
+      package = pkgs.unstable.darwin.linux-builder-vz;
       systems = [
         "x86_64-linux"
         "aarch64-linux"
       ];
       ephemeral = true;
       maxJobs = 4;
-      config = {
-        nix.settings = {
-          experimental-features = [ "nix-command" "flakes" ];
-        };
-        users.users."builder".extraGroups = [ "wheel" ];
-        security.sudo.wheelNeedsPassword = false;
-        boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
-        virtualisation = {
-          darwin-builder = {
-            diskSize = 100 * 1024;
-            memorySize = 16 * 1024;
+      supportedFeatures = [
+        "benchmark"
+        "big-parallel"
+      ];
+      config =
+        { pkgs, ... }:
+        {
+          # Linux 6.12 preserves Rosetta compatibility on macOS Sequoia.
+          boot.kernelPackages = pkgs.linuxPackages_6_12;
+          nix.settings = {
+            experimental-features = [
+              "nix-command"
+              "flakes"
+            ];
           };
-          cores = 8;
+          virtualisation = {
+            darwin-builder = {
+              diskSize = 100 * 1024;
+              memorySize = 16 * 1024;
+            };
+            cores = 8;
+          };
         };
-      };
     };
 
     settings = {
@@ -38,23 +52,15 @@
       trusted-users = [ "@admin" ];
 
       # Enable nix-command and flakes.
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
 
     # Disable Nix channels since we have a flake based config
     channel.enable = false;
   };
-
-  # Enable rossetta builder
-  nix-rosetta-builder = {
-    enable = true;
-    memory = "16GiB";
-    cores = 8;
-    onDemand = true;
-  };
-
-  # Debug Linux builder
-  # launchd.daemons.linux-builder = { serviceConfig = { StandardOutPath = "/var/log/darwin-builder.log"; StandardErrorPath = "/var/log/darwin-builder.log"; }; };
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -122,7 +128,7 @@
       #"ghostty"
     ];
     masApps = {
-     #"Yoink" = 457622435;
+      #"Yoink" = 457622435;
     };
     onActivation.cleanup = "zap";
   };
@@ -132,7 +138,7 @@
   '';
 
   system.defaults = {
-    dock.autohide  = true;
+    dock.autohide = true;
     dock.persistent-apps = [
       "${pkgs.alacritty}/Applications/Alacritty.app"
       "/System/Cryptexes/App/System/Applications/Safari.app"
@@ -141,7 +147,7 @@
       "/System/Applications/Calendar.app"
     ];
     finder.FXPreferredViewStyle = "clmv";
-    loginwindow.GuestEnabled  = false;
+    loginwindow.GuestEnabled = false;
     NSGlobalDomain.AppleICUForce24HourTime = true;
     NSGlobalDomain.AppleInterfaceStyle = "Dark";
     NSGlobalDomain.KeyRepeat = 2;

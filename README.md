@@ -16,6 +16,24 @@ or
 darwin-rebuild switch --flake .#thst-mbp
 ```
 
+# macOS Linux builder
+
+Both macOS configurations use [vzvm](https://github.com/applicative-systems/vzvm)
+through `nix.linux-builder`, with Rosetta for `x86_64-linux` builds and native
+`aarch64-linux` builds. The VM has 8 cores, 16 GiB RAM, a 100 GiB writable disk,
+and supports 4 concurrent build jobs.
+
+The launchd service keeps the VM running. Its writable disk is recreated on each
+start (`ephemeral = true`); the read-only guest store image is cached between
+starts. Rosetta is installed by the macOS activation script. The guest uses
+Linux 6.12 for Rosetta compatibility with macOS Sequoia.
+
+Read VM logs with:
+
+```shell
+/usr/bin/log stream --predicate 'subsystem == "systems.applicative.vzvm"'
+```
+
 # Use with nixos-anywhere
 
 Generate `hardware-configuration.nix` for remote host:

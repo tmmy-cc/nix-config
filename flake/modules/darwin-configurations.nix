@@ -4,7 +4,6 @@ let
     nixpkgs
     home-manager
     nix-darwin
-    nix-rosetta-builder
     nix-homebrew
     mac-app-util
     ;
@@ -35,7 +34,6 @@ in
             pkgs = pkgs;
           };
           modules = [
-            nix-rosetta-builder.darwinModules.default
             nix-homebrew.darwinModules.nix-homebrew
             mac-app-util.darwinModules.default
 
@@ -104,7 +102,6 @@ in
             pkgs = pkgs;
           };
           modules = [
-            nix-rosetta-builder.darwinModules.default
             nix-homebrew.darwinModules.nix-homebrew
             mac-app-util.darwinModules.default
 
