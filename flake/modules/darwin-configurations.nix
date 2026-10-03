@@ -34,6 +34,7 @@ in
             pkgs = pkgs;
           };
           modules = [
+            self.darwinModules.linux-builder
             nix-homebrew.darwinModules.nix-homebrew
             mac-app-util.darwinModules.default
 
@@ -102,6 +103,7 @@ in
             pkgs = pkgs;
           };
           modules = [
+            self.darwinModules.linux-builder
             nix-homebrew.darwinModules.nix-homebrew
             mac-app-util.darwinModules.default
 
