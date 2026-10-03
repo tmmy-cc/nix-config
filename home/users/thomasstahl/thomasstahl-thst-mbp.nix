@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -67,7 +72,7 @@
     ../../programs/wezterm.nix
     #../../programs/ghostty.nix
     ../../programs/obsidian.nix
-    ../../programs/podman.nix
+    ../../programs/docker.nix
     ../../programs/yazi.nix
     ../../programs/karabiner-elements
   ];

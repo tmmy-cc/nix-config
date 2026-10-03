@@ -34,6 +34,29 @@ Read VM logs with:
 /usr/bin/log stream --predicate 'subsystem == "systems.applicative.vzvm"'
 ```
 
+# Docker
+
+The Macs use the Docker CLI with Colima. Home Manager supplies a Colima template
+with Apple virtualization, Rosetta, 4 cores, 4 GiB RAM, and 100 GiB disk space.
+Start the container VM and select its Docker context after rebuilding:
+
+```shell
+colima start
+docker context use colima
+docker run --rm hello-world
+docker compose version
+docker buildx version
+```
+
+Stop the VM with `colima stop`. The template applies to new Colima profiles;
+existing profiles retain their configuration. Container images and volumes persist
+across VM restarts.
+
+The NixOS hosts run Docker Engine and grant their configured regular users access
+through the `docker` group. Log in again after switching to pick up group changes.
+The standalone Home Manager configuration supplies Docker client tools; its host
+must provide Docker Engine and socket access.
+
 # Use with nixos-anywhere
 
 Generate `hardware-configuration.nix` for remote host:

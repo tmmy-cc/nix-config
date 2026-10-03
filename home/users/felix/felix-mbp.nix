@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -63,6 +68,7 @@
 
   imports = [
     ./common.nix
+    ../../programs/docker.nix
     ../../programs/bitwarden.nix
     ../../programs/brave.nix
     ../../programs/chromium.nix
@@ -97,7 +103,7 @@
     };
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      disabled-extensions=[
+      disabled-extensions = [
         "windowsNavigator@gnome-shell-extensions.gcampax.github.com"
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         "light-style@gnome-shell-extensions.gcampax.github.com"
@@ -106,17 +112,17 @@
         "org.gnome.Nautilus.desktop"
         "brave-browser.desktop"
         "org.gnome.Settings.desktop"
-	"polymc.dektop"
+        "polymc.dektop"
       ];
       welcome-dialog-last-shown-version = "46.2";
     };
     # Keybindings
     "org/gnome/desktop/wm/keybindings" = {
-      close = ["<Super>w"];
-      minimize = ["<Shift><Super>h"];
+      close = [ "<Super>w" ];
+      minimize = [ "<Shift><Super>h" ];
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      screensaver = ["<Shift><Super>l"];
+      screensaver = [ "<Shift><Super>l" ];
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
       ];

@@ -1,4 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -64,6 +70,7 @@
 
   imports = [
     ./common.nix
+    ../../programs/docker.nix
     #../../development/rust.nix
     ../../development/c-cpp.nix
     ../../desktop/gnome/gnome-tweaks.nix
@@ -104,7 +111,7 @@
     };
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      disabled-extensions=[
+      disabled-extensions = [
         "windowsNavigator@gnome-shell-extensions.gcampax.github.com"
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         "light-style@gnome-shell-extensions.gcampax.github.com"
@@ -123,11 +130,11 @@
     };
     # Keybindings
     "org/gnome/desktop/wm/keybindings" = {
-      close = ["<Super>w"];
-      minimize = ["<Shift><Super>h"];
+      close = [ "<Super>w" ];
+      minimize = [ "<Shift><Super>h" ];
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      screensaver = ["<Shift><Super>l"];
+      screensaver = [ "<Shift><Super>l" ];
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
       ];
