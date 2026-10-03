@@ -10,6 +10,7 @@
     # Run Linux builds through Apple Virtualization.framework and Rosetta.
     linux-builder = {
       enable = true;
+      hostMacOSVersion = "15.7.3";
       package = pkgs.unstable.darwin.linux-builder-vz;
       systems = [
         "x86_64-linux"
@@ -22,10 +23,8 @@
         "big-parallel"
       ];
       config =
-        { pkgs, ... }:
+        { ... }:
         {
-          # Linux 6.12 preserves Rosetta compatibility on macOS Sequoia.
-          boot.kernelPackages = pkgs.linuxPackages_6_12;
           nix.settings = {
             experimental-features = [
               "nix-command"

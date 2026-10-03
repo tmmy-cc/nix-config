@@ -25,8 +25,10 @@ and supports 4 concurrent build jobs.
 
 The launchd service keeps the VM running. Its writable disk is recreated on each
 start (`ephemeral = true`); the read-only guest store image is cached between
-starts. Rosetta is installed by the macOS activation script. The guest uses
-Linux 6.12 for Rosetta compatibility with macOS Sequoia.
+starts. Rosetta is installed by the macOS activation script. Hosts running macOS
+Sequoia 15.5 and later use Linux 6.12 for Rosetta compatibility; Tahoe uses the
+default guest kernel. Set `nix.linux-builder.hostMacOSVersion` to the target Mac’s version and
+update it when upgrading macOS.
 
 Read VM logs with:
 
