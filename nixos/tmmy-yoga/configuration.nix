@@ -12,7 +12,12 @@
   ];
 
   # Enable nix-command and flakes.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
+  virtualisation.docker.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -92,7 +97,11 @@
     isNormalUser = true;
     description = "Thommy";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     hashedPassword = "$y$j9T$5sIcbFgzUnpeStBycyWU50$0.om7EJR4zKUVADJN1jjye0B0ZRXFLiUfO6y5K/4Wd5";
   };
 

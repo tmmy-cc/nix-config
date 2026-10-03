@@ -10,6 +10,8 @@
     ./hardware-configuration.nix
   ];
 
+  virtualisation.docker.enable = true;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -86,10 +88,13 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.clara= {
+  users.users.clara = {
     isNormalUser = true;
     description = "Clara Stahl";
-    extraGroups = [ "networkmanager" ];
+    extraGroups = [
+      "networkmanager"
+      "docker"
+    ];
     shell = pkgs.zsh;
     hashedPassword = "$y$j9T$rXXKSfOUGUayqTDwUMUw1.$NzBW5TpI0AWFcqvlmDryvEO7R47Mxd8QJEvcpXkm9xC";
   };
@@ -97,7 +102,11 @@
   users.users.tmmy = {
     isNormalUser = true;
     description = "Thommy";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     shell = pkgs.zsh;
     hashedPassword = "$y$j9T$UeLpk9xFodZMSBTacrY/e/$epMNcqLEndlbF7Fyt5YzjpyWd9so0Yb/wgYmVjGc2G5";
   };
