@@ -17,6 +17,7 @@
         "aarch64-linux"
       ];
       ephemeral = true;
+      docker.hostUser = "thomasstahl";
       maxJobs = 4;
       supportedFeatures = [
         "benchmark"
