@@ -38,42 +38,55 @@ Read VM logs with:
 
 # Docker
 
-## Initialize Docker and Colima on macOS
+## Initialize Docker on macOS
 
-The Macs use the Docker CLI with Colima. Home Manager supplies a Colima template
-with Apple virtualization, Rosetta, 4 cores, 4 GiB RAM, and 100 GiB disk space.
-Apply the configuration first, choosing the matching host:
+The Macs run Docker Engine in the vzvm Nix builder. Both workloads share its
+8 cores and 16 GiB RAM. Apply the configuration for the matching host:
 
 ```shell
 darwin-rebuild switch --flake .#tmmy-mbp
 ```
 
-Open a new terminal, then initialize and start Colima as your regular user:
+Open a new terminal and initialize the Docker context as your regular user:
 
 ```shell
 unset DOCKER_HOST DOCKER_CONTEXT
-colima start --runtime docker --vm-type vz --vz-rosetta
-docker context use colima
-colima status
+docker-builder-init
 docker version
 docker run --rm hello-world
 docker compose version
 docker buildx version
 ```
 
-The first start downloads and creates the container VM. Subsequent starts use
-`colima start`; stop it with `colima stop`. Container images and volumes persist
-across VM restarts. This VM is separate from the vzvm Nix builder.
+The `vzvm` context connects through SSH to `docker-builder`. Launchd manages the
+VM automatically. Docker images and named volumes live on the persistent
+`/var/lib/darwin-builder/docker.img` disk (100 GiB initially). The Nix builder's
+writable disk remains ephemeral and resets when the VM restarts.
 
-The template applies to new Colima profiles. Existing profiles retain their
-configuration; inspect `~/.colima/default/colima.yaml` and use
-`colima start --edit` to change it. VM type and architecture are fixed when the
-profile is created. See the [Colima configuration documentation](https://colima.run/docs/configuration/).
+Ports 8080 and 5432 forward from Mac localhost to the same guest ports. Publish
+a container port and connect through `http://localhost:8080`:
+
+```shell
+docker run --rm -p 8080:80 nginx:alpine
+```
+
+Configure additional TCP ports with `nix.linux-builder.docker.forwardedPorts` in
+the host configuration, then rebuild. Forwarding binds to `127.0.0.1`.
+The Mac user's home directory is shared at the same path inside the guest;
+bind mounts must use paths inside that home:
+
+```shell
+docker run --rm -v "$HOME/projects:/workspace" alpine ls /workspace
+```
+
+Before switching from Colima, stop its VM with `colima stop`. Existing Colima
+images and volumes stay in its disk; transfer data you need before removing
+that profile. Use the Colima executable from the old system generation or
+`nix run nixpkgs#colima -- delete` to remove its VM disk after migration.
 
 ## Run x86-64 containers on Apple Silicon
 
-Colima's ARM Linux VM runs `linux/amd64` containers through Rosetta when `vz` and
-`rosetta: true` are enabled. Select the image platform explicitly:
+The ARM vzvm guest runs `linux/amd64` containers through Rosetta. Select the image platform explicitly:
 
 ```shell
 docker run --rm --platform linux/amd64 alpine uname -m
@@ -96,9 +109,8 @@ services:
 
 Rosetta translates x86-64 user-space binaries; the guest kernel remains ARM.
 Native ARM images are preferable when available. Rosetta's compatibility depends
-on the macOS version and the Colima guest kernel; the Nix builder's Linux 6.12 pin
-applies only to the separate Nix builder VM. See [Colima's Rosetta settings](https://colima.run/docs/configuration/#rosetta)
-and [Docker's platform option](https://docs.docker.com/reference/cli/docker/container/run/).
+on the host macOS version. The shared guest uses Linux 6.12 on Sequoia 15.5 and
+later; Tahoe uses the default kernel. See [Docker's platform option](https://docs.docker.com/reference/cli/docker/container/run/).
 
 ## Initialize Docker on Linux
 
