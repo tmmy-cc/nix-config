@@ -71,6 +71,8 @@
     glow
     ripgrep
     fzf
+
+    glab
   ];
 
   imports = [

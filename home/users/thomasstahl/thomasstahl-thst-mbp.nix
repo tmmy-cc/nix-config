@@ -63,6 +63,15 @@
   #
   #  /etc/profiles/per-user/thommy/etc/profile.d/hm-session-vars.sh
   #
+  home.sessionVariables = {
+    GITLAB_HOST = "gitlab.my.imar.de";
+  };
+
+  # Read the GitLab token from the Keychain at shell start, so it never lands
+  # in the Nix store.
+  programs.zsh.initExtra = ''
+    export GITLAB_TOKEN="$(security find-generic-password -a "$USER" -s gitlab-token -w 2>/dev/null)"
+  '';
 
   imports = [
     ./common.nix
