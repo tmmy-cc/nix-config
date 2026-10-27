@@ -102,6 +102,7 @@
     unstable.jdk25_headless
     mkalias
     wireguard-tools
+    gh
   ];
 
   environment.variables = {
