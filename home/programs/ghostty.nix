@@ -1,12 +1,19 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
-    (nerdfonts.override { fonts = ["JetBrainsMono"]; })
-  ]
-  ++ lib.optionals stdenv.hostPlatform.isLinux [
-    ghostty.default
-  ];
+  home.packages =
+    with pkgs;
+    [
+      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    ]
+    ++ lib.optionals stdenv.hostPlatform.isLinux [
+      ghostty.default
+    ];
 
   home.sessionVariables = {
     TERM = "term-256color";

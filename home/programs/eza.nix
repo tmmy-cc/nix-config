@@ -1,8 +1,13 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Enable eza
-  programs.eza= {
+  programs.eza = {
     enable = true;
     enableZshIntegration = true;
   };

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   configPath = "${config.home.homeDirectory}/nix-config/dotconfig/nvim/";

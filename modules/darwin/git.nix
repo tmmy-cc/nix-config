@@ -1,10 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.programs.git;
+let
+  cfg = config.programs.git;
 
-in {
+in
+{
   options = {
     programs.git = {
       enable = mkEnableOption (lib.mdDoc "git");
@@ -18,27 +25,48 @@ in {
       };
 
       config = mkOption {
-        type = with types;
-          let gitini = attrsOf (attrsOf anything);
-          in either gitini (listOf gitini) // {
-            merge = loc: defs:
+        type =
+          with types;
+          let
+            gitini = attrsOf (attrsOf anything);
+          in
+          either gitini (listOf gitini)
+          // {
+            merge =
+              loc: defs:
               let
-                config = foldl' (acc:
-                  { value, ... }@x:
-                  acc // (if isList value then {
-                    ordered = acc.ordered ++ value;
-                  } else {
-                    unordered = acc.unordered ++ [ x ];
-                  })) {
-                    ordered = [ ];
-                    unordered = [ ];
-                  } defs;
-              in [ (gitini.merge loc config.unordered) ] ++ config.ordered;
+                config =
+                  foldl'
+                    (
+                      acc:
+                      { value, ... }@x:
+                      acc
+                      // (
+                        if isList value then
+                          {
+                            ordered = acc.ordered ++ value;
+                          }
+                        else
+                          {
+                            unordered = acc.unordered ++ [ x ];
+                          }
+                      )
+                    )
+                    {
+                      ordered = [ ];
+                      unordered = [ ];
+                    }
+                    defs;
+              in
+              [ (gitini.merge loc config.unordered) ] ++ config.ordered;
           };
         default = [ ];
         example = {
           init.defaultBranch = "main";
-          url."https://github.com/".insteadOf = [ "gh:" "github:" ];
+          url."https://github.com/".insteadOf = [
+            "gh:"
+            "github:"
+          ];
         };
         description = lib.mdDoc ''
           Configuration to write to /etc/gitconfig. A list can also be
