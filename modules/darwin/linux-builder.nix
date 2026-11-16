@@ -26,10 +26,8 @@ in
     };
     forwardedPorts = lib.mkOption {
       type = lib.types.listOf lib.types.port;
-      default = [
-        8080
-        5432
-      ];
+      # 8080 stays free for development servers on the Mac.
+      default = [ 5432 ];
       description = "TCP ports forwarded from Mac localhost to Docker-published ports in the guest.";
     };
     diskSizeMiB = lib.mkOption {

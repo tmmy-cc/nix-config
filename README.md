@@ -63,14 +63,14 @@ VM automatically. Docker images and named volumes live on the persistent
 `/var/lib/darwin-builder/docker.img` disk (100 GiB initially). The Nix builder's
 writable disk remains ephemeral and resets when the VM restarts.
 
-Ports 8080 and 5432 forward from Mac localhost to the same guest ports. Publish
-a container port and connect through `http://localhost:8080`:
+Port 5432 forwards from Mac localhost to the same guest port, so a container
+that publishes it is reachable at `localhost:5432`:
 
 ```shell
-docker run --rm -p 8080:80 nginx:alpine
+docker run --rm -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:17
 ```
 
-Configure additional TCP ports with `nix.linux-builder.docker.forwardedPorts` in
+Port 8080 stays free for development servers on the Mac. Configure additional TCP ports with `nix.linux-builder.docker.forwardedPorts` in
 the host configuration, then rebuild. Forwarding binds to `127.0.0.1`.
 The Mac user's home directory is shared at the same path inside the guest;
 bind mounts must use paths inside that home:
